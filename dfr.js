@@ -28,17 +28,36 @@ function dataDimensions(dataframe) {
 }
 
 function findTotal(dataset) {
-  let total = 0
+  if (!Array.isArray(dataset)) {
+    return 0; 
+  }
+  let total = 0;
   for (let i = 0; i < dataset.length; i++) { 
     if (validNumber(dataset[i])){
-      total += Number(dataset[i]) 
+      total += Number(dataset[i]);
     }
   }
-  return total
+  return total;
 }
 
 function calculateMean(dataset) {
-  
+  if (!Array.isArray(dataset) || dataset.length === 0){
+    return 0;
+  }
+  let total = 0
+  let length = 0
+  for (let i = 0; i < dataset.length; i++){
+    if (validNumber(dataset[i])){
+      total += Number(dataset[i])
+      length += 1
+    }
+  }
+  //let total = findTotal(dataset);
+  //let length = dataset.length;
+  if (total === 0){
+    return 0;
+  } 
+  return total/length; 
 }
 
 function calculateMedian(dataset) {
