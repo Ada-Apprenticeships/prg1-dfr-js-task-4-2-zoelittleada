@@ -44,16 +44,8 @@ function calculateMean(dataset) {
   if (!Array.isArray(dataset) || dataset.length === 0){
     return 0;
   }
-  let total = findTotal(dataset)
-  let length = dataset.filter(validNumber).length
-  /*
-  for (let i = 0; i < dataset.length; i++){
-    if (validNumber(dataset[i])){
-      total += Number(dataset[i])
-      length += 1
-    }
-  }
-    */
+  let total = findTotal(dataset);
+  let length = dataset.filter(validNumber).length;
   if (total === 0){
     return 0;
   } 
@@ -61,7 +53,21 @@ function calculateMean(dataset) {
 }
 
 function calculateMedian(dataset) {
-
+  if (!Array.isArray(dataset) || dataset.length === 0) {
+    return 0; 
+  }
+  const orderNumbers = dataset.filter(validNumber).map(Number).sort((a,b)=> a-b);
+  const length = orderNumbers.length
+  if (length === 0){
+    return 0
+  } else if (length % 2 === 0){
+    const middle1 = length / 2 -1
+    const middle2 = length / 2
+    return (orderNumbers[middle1] + orderNumbers[middle2])/2
+  } else {
+    const middle = Math.floor(length/2)
+    return orderNumbers[middle] 
+  }
 }
 
 function convertToNumber(dataframe, col) {
