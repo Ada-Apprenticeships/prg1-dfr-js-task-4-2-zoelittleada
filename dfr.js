@@ -96,21 +96,11 @@ function loadCSV(csvFile, ignoreRows, ignoreCols) {
   const lines = data.split(/\n/);
   const originalRows = lines.length;
   const originalCols = lines[0].split(',').length;
-  const processedData = []
-  for (let i = 0; i < lines.length; i++) {
-    if (ignoreRows.includes(i)) {
-      continue; 
-      }
-  const row = lines[i].split(',');
-  const processedRow = []
-  for (let j = 0; j < row.length; j++){
-    if (ignoreCols.includes(j)) {
-      continue;
-      }
-      processedRow.push(row[j])
-    }
-    processedData.push(processedRow)
-  }
+  const processedData = lines
+    .filter((_, i) => !ignoreRows.includes(i)) 
+    .map(line => line.split(',')
+      .filter((_, j) => !ignoreCols.includes(j)) 
+    );
   return [processedData, originalRows, originalCols]
 }
 
