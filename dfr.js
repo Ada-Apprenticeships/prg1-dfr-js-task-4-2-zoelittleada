@@ -71,17 +71,48 @@ function calculateMedian(dataset) {
 }
 
 function convertToNumber(dataframe, col) {
-
+  let count = 0
+  for (let i = 0; i < dataframe.length; i++) {
+    if (validNumber(dataframe[i][col])) {
+      dataframe[i][col] = Number(dataframe[i][col]);
+      count += 1;
+    }
+  }
+  return count;
 }
 
 function flatten(dataframe) {
-
+  if (!Array.isArray(dataframe) || dataframe.length === 0) {
+    return []; 
+  }
+  return dataframe.map(row => row[0]); 
 }
 
 function loadCSV(csvFile, ignoreRows, ignoreCols) {
-
+  if (!fs.existsSync(csvFile)) {
+    return [[], -1, -1];
+  }
+  const data = fs.readFileSync(csvFile, "utf-8");
+  const lines = data.split(/\n/);
+  const originalRows = lines.length;
+  const originalCols = lines[0].split(',').length;
+  const processedData = []
+  for (let i = 0; i < lines.length; i++) {
+    if (ignoreRows.includes(i)) {
+      continue; 
+      }
+  const row = lines[i].split(',');
+  const processedRow = []
+  for (let j = 0; j < row.length; j++){
+    if (ignoreCols.includes(j)) {
+      continue;
+      }
+      processedRow.push(row[j])
+    }
+    processedData.push(processedRow)
+  }
+  return [processedData, originalRows, originalCols]
 }
-
 
 function createSlice(dataframe, columnIndex, pattern, exportColumns = []) {
 
