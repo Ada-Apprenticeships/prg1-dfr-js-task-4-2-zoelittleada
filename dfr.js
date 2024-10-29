@@ -82,10 +82,7 @@ function convertToNumber(dataframe, col) {
 }
 
 function flatten(dataframe) {
-  if (!Array.isArray(dataframe) || dataframe.length === 0) {
-    return []; 
-  }
-  return dataframe.map(row => row[0]); 
+  return Array.isArray(dataframe) && dataframe.length > 0 ? dataframe.map(row => row[0]) : [];
 }
 
 function loadCSV(csvFile, ignoreRows, ignoreCols) {
