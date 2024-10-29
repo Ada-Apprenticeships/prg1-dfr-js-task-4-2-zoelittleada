@@ -44,16 +44,16 @@ function calculateMean(dataset) {
   if (!Array.isArray(dataset) || dataset.length === 0){
     return 0;
   }
-  let total = 0
-  let length = 0
+  let total = findTotal(dataset)
+  let length = dataset.filter(validNumber).length
+  /*
   for (let i = 0; i < dataset.length; i++){
     if (validNumber(dataset[i])){
       total += Number(dataset[i])
       length += 1
     }
   }
-  //let total = findTotal(dataset);
-  //let length = dataset.length;
+    */
   if (total === 0){
     return 0;
   } 
