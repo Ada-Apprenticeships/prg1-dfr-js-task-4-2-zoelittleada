@@ -13,16 +13,28 @@ function validNumber(value) {
   } else {
     return false;
   }
-  //const numValue = Number(value)
-  //return !isNaN(numValue) && (typeof value === 'number'|| typeof value === 'string');
 }
 
 function dataDimensions(dataframe) {
-
+  if (!Array.isArray(dataframe)) {
+    return [-1, -1]; 
+  }
+  const numRows = dataframe.length;
+  if (numRows > 0 && Array.isArray(dataframe[0])){
+    return [numRows, dataframe[0].length];
+  } else {
+    return [numRows, -1];
+  }
 }
 
 function findTotal(dataset) {
-  
+  let total = 0
+  for (let i = 0; i < dataset.length; i++) { 
+    if (validNumber(dataset[i])){
+      total += Number(dataset[i]) 
+    }
+  }
+  return total
 }
 
 function calculateMean(dataset) {
