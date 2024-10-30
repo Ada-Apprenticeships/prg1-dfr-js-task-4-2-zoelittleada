@@ -17,7 +17,7 @@ function validNumber(value) {
 
 function dataDimensions(dataframe) {
   return Array.isArray(dataframe) 
-  ? (dataframe.length > 0 && Array.isArray(dataframe[0]) 
+    ? (dataframe.length > 0 && Array.isArray(dataframe[0]) 
     ? [dataframe.length, dataframe[0].length] 
     : [dataframe.length, -1]) 
     : [-1, -1];
@@ -84,7 +84,13 @@ function loadCSV(csvFile, ignoreRows, ignoreCols) {
 }
 
 function createSlice(dataframe, columnIndex, pattern, exportColumns = []) {
-
+  if (columnIndex < 0 || columnIndex >= dataframe[0].length) {
+    throw new Error('Invalid column index.');
+  }
+  const result = dataframe
+    .filter(row => pattern === '*' || row[columnIndex] === pattern)
+    .map(row => exportColumns.length ? exportColumns.map(i => row[i]) : row);
+  return result;
 }
 
 module.exports = {
