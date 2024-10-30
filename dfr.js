@@ -5,6 +5,12 @@ function fileExists(filename) {
 }
 
 function validNumber(value) {
+  return typeof value === 'number' 
+    ? !isNaN(value) 
+    : typeof value === 'string' && /^-?\d+(\.\d+)?$/.test(value);
+}
+/*
+function validNumber(value) {
   if (typeof value === 'number'){
     return !isNaN(value);
   } else if (typeof value === 'string'){
@@ -14,6 +20,7 @@ function validNumber(value) {
     return false;
   }
 }
+  */
 
 function dataDimensions(dataframe) {
   return Array.isArray(dataframe) 
@@ -84,6 +91,7 @@ function loadCSV(csvFile, ignoreRows, ignoreCols) {
 }
 
 function createSlice(dataframe, columnIndex, pattern, exportColumns = []) {
+  //makes sure the column index is valid in the dataframe 
   if (columnIndex < 0 || columnIndex >= dataframe[0].length) {
     throw new Error('Invalid column index.');
   }
